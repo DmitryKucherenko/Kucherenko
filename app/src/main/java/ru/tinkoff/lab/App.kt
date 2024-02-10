@@ -6,7 +6,7 @@ import ru.tinkoff.lab.di.DaggerAppComponent
 
 class App : Application() {
     val appComponent: AppComponent by lazy {
-        DaggerAppComponent.factory().create(applicationContext)
+        DaggerAppComponent.factory().create(this)
     }
 
 }

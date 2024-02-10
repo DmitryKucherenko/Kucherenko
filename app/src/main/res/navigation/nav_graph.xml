@@ -6,25 +6,37 @@
     app:startDestination="@id/filmList">
     <fragment
         android:id="@+id/filmList"
-        android:name="ru.tinkoff.lab.presentation.filmList.previewFilmList.FilmListFragment"
+        android:name="ru.tinkoff.lab.presentation.films.filmList.FilmListFragment"
         android:label="preview_list_films"
-        tools:layout="@layout/preview_list_films" >
+        tools:layout="@layout/films_list" >
         <action
             android:id="@+id/action_filmList_to_detailsFilmFragment"
             app:destination="@id/detailsFilmFragment" />
         <action
-            android:id="@+id/action_filmList_to_favouriteFilmListFragment"
-            app:destination="@id/favouriteFilmListFragment" />
+            android:id="@+id/action_filmList_to_favouriteListFragment"
+            app:destination="@id/favouriteListFragment" />
     </fragment>
     <fragment
-        android:id="@+id/favouriteFilmListFragment"
-        android:name="ru.tinkoff.lab.presentation.favouriteFilmList.FavouriteFilmListFragment"
-        android:label="FavouriteFilmListFragment" />
-    <fragment
         android:id="@+id/detailsFilmFragment"
-        android:name="ru.tinkoff.lab.presentation.filmList.detailsFilm.DetailsFilmFragment"
+        android:name="ru.tinkoff.lab.presentation.films.filmDetails.FilmDetailsFragment"
         android:label="DetailsFilmFragment"
         >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/favouriteListFragment"
+        android:name="ru.tinkoff.lab.presentation.favouriteFilms.filmList.FavouriteListFragment"
+        android:label="FavouriteListFragment" >
+        <action
+            android:id="@+id/action_favouriteListFragment_to_favouriteDetailsFragment"
+            app:destination="@id/favouriteDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favouriteDetailsFragment"
+        android:name="ru.tinkoff.lab.presentation.favouriteFilms.filmDetails.FavouriteDetailsFragment"
+        android:label="FavouriteDetailsFragment" >
         <argument
             android:name="id"
             app:argType="integer" />

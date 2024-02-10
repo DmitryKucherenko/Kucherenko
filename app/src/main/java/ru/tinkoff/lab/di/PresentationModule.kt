@@ -2,26 +2,51 @@ package ru.tinkoff.lab.di
 
 import dagger.Module
 import dagger.Provides
-import ru.tinkoff.lab.domain.usecase.DetailsFilmUseCase
+import ru.tinkoff.lab.domain.usecase.AddFavouriteUseCase
+import ru.tinkoff.lab.domain.usecase.DeleteUseCase
+import ru.tinkoff.lab.domain.usecase.FavouriteListUseCase
+import ru.tinkoff.lab.domain.usecase.FilmDetailsUseCase
 import ru.tinkoff.lab.domain.usecase.FilmsListUseCase
-import ru.tinkoff.lab.presentation.filmList.detailsFilm.DetailsFilmViewModel
-import ru.tinkoff.lab.presentation.filmList.previewFilmList.FilmListViewModel
+import ru.tinkoff.lab.presentation.favouriteFilms.filmDetails.FavouriteDetailsViewModel
+import ru.tinkoff.lab.presentation.favouriteFilms.filmList.FavouriteListViewModel
+import ru.tinkoff.lab.presentation.films.filmDetails.FilmDetailsViewModel
+import ru.tinkoff.lab.presentation.films.filmList.FilmListViewModel
 
 @Module
 class PresentationModule {
 
     @Provides
     fun provideFilmListViewModel(
-        filmListUseCase: FilmsListUseCase
+        filmListUseCase: FilmsListUseCase,
+        addFavouriteUseCase: AddFavouriteUseCase
     ): FilmListViewModel {
-        return FilmListViewModel(filmListUseCase)
+        return FilmListViewModel(
+            filmListUseCase,
+            addFavouriteUseCase
+        )
     }
 
     @Provides
     fun provideDetailsFilmViewModel(
-        detailsFilmUseCase: DetailsFilmUseCase
-    ): DetailsFilmViewModel {
-        return DetailsFilmViewModel(detailsFilmUseCase)
+        filmDetailsUseCase: FilmDetailsUseCase
+    ): FilmDetailsViewModel {
+        return FilmDetailsViewModel(filmDetailsUseCase)
     }
+
+    @Provides
+    fun provideFavouriteDetailsViewModel(
+        filmDetailsUseCase: FilmDetailsUseCase
+    ): FavouriteDetailsViewModel {
+        return FavouriteDetailsViewModel(filmDetailsUseCase)
+    }
+
+    @Provides
+    fun provideFavouriteListViewModel(
+        favouriteListUseCase: FavouriteListUseCase,
+        deleteUseCase: DeleteUseCase
+    ): FavouriteListViewModel {
+        return FavouriteListViewModel(favouriteListUseCase, deleteUseCase)
+    }
+
 
 }

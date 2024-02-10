@@ -1,10 +1,10 @@
 package ru.tinkoff.lab.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import ru.tinkoff.lab.domain.model.DetailsFilmState
-import ru.tinkoff.lab.domain.model.FilmListState
+import ru.tinkoff.lab.domain.state.FilmDetailsState
+import ru.tinkoff.lab.domain.state.FilmListState
 
 interface FilmsListRepository {
     fun getFilmsList(): Flow<FilmListState>
-    fun getDetailsFilm(id:Int): Flow<DetailsFilmState>
+    fun getDetailsFilm(id:Int): Flow<FilmDetailsState>
 }

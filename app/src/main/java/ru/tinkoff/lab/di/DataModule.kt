@@ -1,5 +1,6 @@
 package ru.tinkoff.lab.di
 
+import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -11,7 +12,9 @@ import okhttp3.CacheControl
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import ru.tinkoff.lab.data.network.ApiService
+import ru.tinkoff.lab.data.local.db.AppDatabase
+import ru.tinkoff.lab.data.local.db.FilmDao
+import ru.tinkoff.lab.data.network.api.ApiService
 import javax.inject.Singleton
 
 
@@ -22,7 +25,7 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(okhttp: OkHttpClient, context: Context): Retrofit {
+    fun provideRetrofit(okhttp: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create())
             .baseUrl(BASE_URL)
@@ -59,7 +62,7 @@ class DataModule {
     @Singleton
     @Provides
     fun provideOkHttpClient(context: Context): OkHttpClient = OkHttpClient.Builder()
-        .cache(Cache(context.cacheDir, cacheSize))
+        .cache(Cache(context.applicationContext.cacheDir, cacheSize))
         .addInterceptor { chain ->
             val builder = chain.request().newBuilder()
             if (!isInternetAvailable(context)) {
@@ -68,4 +71,17 @@ class DataModule {
             chain.proceed(builder.build());
         }
         .build()
+
+    @Singleton
+    @Provides
+
+    fun provideFavouriteDatabase(context: Context): AppDatabase {
+        return AppDatabase.getInstance(context)
+    }
+
+    @Singleton
+    @Provides
+    fun provideTaskDao(database: AppDatabase): FilmDao {
+        return database.filmDao()
+    }
 }

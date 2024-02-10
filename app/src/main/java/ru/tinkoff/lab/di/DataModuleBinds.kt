@@ -2,7 +2,9 @@ package ru.tinkoff.lab.di
 
 import dagger.Binds
 import dagger.Module
-import ru.tinkoff.lab.data.repository.FilmsListRepositoryImpl
+import ru.tinkoff.lab.data.repository.FavouriteRepositoryImpl
+import ru.tinkoff.lab.data.repository.FilmsRepositoryImpl
+import ru.tinkoff.lab.domain.repository.FavouriteRepository
 import ru.tinkoff.lab.domain.repository.FilmsListRepository
 import javax.inject.Singleton
 
@@ -11,6 +13,13 @@ interface DataModuleBinds {
     @Singleton
     @Binds
     fun bindFilmsListRepository(
-        filmsListRepositoryImpl: FilmsListRepositoryImpl
+        filmsRepositoryImpl: FilmsRepositoryImpl
     ): FilmsListRepository
+
+    @Singleton
+    @Binds
+    fun bindFavouriteRepository(
+        favouriteRepository: FavouriteRepositoryImpl
+    ): FavouriteRepository
+
 }

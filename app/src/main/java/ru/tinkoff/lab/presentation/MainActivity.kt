@@ -2,29 +2,22 @@ package ru.tinkoff.lab.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.widget.Button
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import ru.tinkoff.lab.App
 import ru.tinkoff.lab.R
-import ru.tinkoff.lab.data.repository.FilmsListRepositoryImpl
+import ru.tinkoff.lab.data.repository.FilmsRepositoryImpl
+import ru.tinkoff.lab.databinding.ActivityMainBinding
 import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity() {
-
-    @Inject
-    lateinit var repository: FilmsListRepositoryImpl
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = requireNotNull(_binding)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        val navController: NavController = this.findNavController(R.id.fragment_container)
-
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(_binding?.root)
     }
 }
