@@ -2,4 +2,5 @@
     <string name="app_name">Kinopoisk</string>
     <string name="repeat_button">Повторить</string>
     <string name="no_internet_message">Произошла ошибка при загрузке данных, \n проверьте подключение к сети</string>
+    <string name="descriptionTest">Сопротивление собирает отряд для выполнения особой миссии - надо выкрасть чертежи самого совершенного и мертоносного оружия Империи. Не всем суждено вернуться домой, но герои готовы к этому, ведь на кону судьба Галактики</string>
 </resources>

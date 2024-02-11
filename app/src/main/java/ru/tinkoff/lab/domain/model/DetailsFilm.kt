@@ -8,6 +8,6 @@ data class DetailsFilm(
     val posterUrlPreview: String,
     val description: String,
     val shortDescription:String,
-    val countries: List<String>,
-    val genres: List<String>
+    val countries: List<Country>,
+    val genres: List<Genre>
 )

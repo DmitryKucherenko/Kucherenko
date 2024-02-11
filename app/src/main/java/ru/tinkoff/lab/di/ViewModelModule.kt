@@ -7,7 +7,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
 import dagger.multibindings.StringKey
-import ru.tinkoff.lab.presentation.FilmList.FilmListViewModel
+import ru.tinkoff.lab.presentation.filmList.detailsFilm.DetailsFilmViewModel
+import ru.tinkoff.lab.presentation.filmList.previewFilmList.FilmListViewModel
 
 @Module
 interface ViewModelModule {
@@ -16,6 +17,12 @@ interface ViewModelModule {
     @Binds
     fun bindListViewModel(impl: FilmListViewModel): ViewModel
 
+    @IntoMap
+    @StringKey("DetailsFilmViewModel")
+    @Binds
+    fun bindDetailsFilmViewModel(impl: DetailsFilmViewModel): ViewModel
+
+
     companion object{
         @Provides
         fun provideViewModelFactory(
@@ -23,5 +30,9 @@ interface ViewModelModule {
         ): ViewModelFactory {
             return ViewModelFactory(viewModels)
         }
+
+
+
+
     }
 }

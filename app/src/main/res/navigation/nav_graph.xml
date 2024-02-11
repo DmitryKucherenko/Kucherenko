@@ -6,7 +6,27 @@
     app:startDestination="@id/filmList">
     <fragment
         android:id="@+id/filmList"
-        android:name="ru.tinkoff.lab.presentation.FilmList.FilmList"
+        android:name="ru.tinkoff.lab.presentation.filmList.previewFilmList.FilmListFragment"
         android:label="preview_list_films"
-        tools:layout="@layout/preview_list_films" />
+        tools:layout="@layout/preview_list_films" >
+        <action
+            android:id="@+id/action_filmList_to_detailsFilmFragment"
+            app:destination="@id/detailsFilmFragment" />
+        <action
+            android:id="@+id/action_filmList_to_favouriteFilmListFragment"
+            app:destination="@id/favouriteFilmListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favouriteFilmListFragment"
+        android:name="ru.tinkoff.lab.presentation.favouriteFilmList.FavouriteFilmListFragment"
+        android:label="FavouriteFilmListFragment" />
+    <fragment
+        android:id="@+id/detailsFilmFragment"
+        android:name="ru.tinkoff.lab.presentation.filmList.detailsFilm.DetailsFilmFragment"
+        android:label="DetailsFilmFragment"
+        >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
 </navigation>

@@ -17,7 +17,9 @@ class FilmApiToDbMapper {
             countries = previewFilmApi.countries.map { countryApi ->
                 Country(countryApi.country)
             },
-            genres = previewFilmApi.genres.map { genreFilmApi -> Genre(genreFilmApi.genre) },
+            genres = previewFilmApi.genres.map { genreFilmApi ->
+                Genre(genreFilmApi.genre)
+            },
             posterUrl = previewFilmApi.posterUrl,
             posterUrlPreview = previewFilmApi.posterUrlPreview,
         )
@@ -28,10 +30,14 @@ class FilmApiToDbMapper {
             nameRu = detailsFilmApi.nameRu,
             posterUrl = detailsFilmApi.posterUrl,
             posterUrlPreview = detailsFilmApi.posterUrlPreview,
-            description = detailsFilmApi.description,
-            shortDescription = detailsFilmApi.shortDescription,
-            countries = detailsFilmApi.countries,
-            genres = detailsFilmApi.genres
+            description = detailsFilmApi.description ?: "",
+            shortDescription = detailsFilmApi.shortDescription ?: "",
+            countries = detailsFilmApi.countries.map { countryApi ->
+                Country(countryApi.country)
+            },
+            genres = detailsFilmApi.genres.map { genreFilmApi ->
+                Genre(genreFilmApi.genre)
+            }
         )
 
         fun filmListApiToDb(filmsListApi: List<PreviewFilmApi>) =

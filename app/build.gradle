@@ -3,6 +3,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs'
+
 }
 
 android {
@@ -71,6 +73,8 @@ dependencies {
     def nav_version = "2.3.5"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+    ("androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version")
+
 
     def glide_version = "4.12.0"
     implementation ("com.github.bumptech.glide:glide:$glide_version")

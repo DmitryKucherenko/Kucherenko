@@ -1,4 +1,4 @@
-package ru.tinkoff.lab.presentation.FilmList.adapter
+package ru.tinkoff.lab.presentation.filmList.previewFilmList.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import ru.tinkoff.lab.domain.model.PreviewFilm

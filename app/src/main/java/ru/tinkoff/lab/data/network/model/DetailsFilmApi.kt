@@ -8,8 +8,8 @@ data class DetailsFilmApi(
     val nameRu: String,
     val posterUrl: String,
     val posterUrlPreview: String,
-    val description: String,
-    val shortDescription:String,
-    val countries: List<String>,
-    val genres: List<String>
+    val description: String?,
+    val shortDescription:String?,
+    val countries: List<CountryApi>,
+    val genres: List<GenreApi>
 )
