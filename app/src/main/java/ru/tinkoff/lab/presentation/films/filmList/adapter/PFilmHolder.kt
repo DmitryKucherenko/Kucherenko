@@ -24,11 +24,12 @@ class PFilmHolder(
     private val favouriteIcon = binding.favouriteIcon
     private val previewFilmProgress = binding.previewProgressBar
 
-    fun bind(film: Film) {
+    fun bind(film: Film, isFavourite: Boolean) {
         filmName.text = film.nameRu
         val genre = film.genres.firstOrNull()?.replaceFirstChar { it.uppercaseChar() } ?: ""
         val year = film.year
         filmGenre.text = "$genre($year)"
+        favouriteIcon.visibility = if (isFavourite) VISIBLE else GONE
         Glide.with(itemView)
             .load(film.posterUrlPreview)
             .listener(object : RequestListener<Drawable> {

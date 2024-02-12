@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import ru.tinkoff.lab.domain.usecase.AddFavouriteUseCase
 import ru.tinkoff.lab.domain.usecase.DeleteUseCase
+import ru.tinkoff.lab.domain.usecase.FavouriteIdsUseCase
 import ru.tinkoff.lab.domain.usecase.FavouriteListUseCase
 import ru.tinkoff.lab.domain.usecase.FilmDetailsUseCase
 import ru.tinkoff.lab.domain.usecase.FilmsListUseCase
@@ -18,11 +19,15 @@ class PresentationModule {
     @Provides
     fun provideFilmListViewModel(
         filmListUseCase: FilmsListUseCase,
-        addFavouriteUseCase: AddFavouriteUseCase
+        favouriteIdsUseCase: FavouriteIdsUseCase,
+        addFavouriteUseCase: AddFavouriteUseCase,
+        deleteUseCase: DeleteUseCase
     ): FilmListViewModel {
         return FilmListViewModel(
             filmListUseCase,
-            addFavouriteUseCase
+            favouriteIdsUseCase,
+            addFavouriteUseCase,
+            deleteUseCase
         )
     }
 

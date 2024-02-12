@@ -28,11 +28,9 @@ class FavouriteRepositoryImpl @Inject constructor(
 
 
     override suspend fun removeFromFavourite(filmId: Int) = filmsDao.deleteFilm(filmId)
+    override fun getFavouritesId(): Flow<List<Int>> = filmsDao.getFavouritesId()
 
-
-   // override fun getFavouriteIds(): Flow<List<Int>> = filmsDao.getFavouriteIds()
-
-    override fun getFavouriteFilm(filmId: Int): Film =
+    override suspend fun getFavouriteFilm(filmId: Int): Film =
         FilmsMapper.filmDbToFilm(filmsDao.getFilm(filmId))
 
 

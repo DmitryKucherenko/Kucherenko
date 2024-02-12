@@ -5,10 +5,10 @@ import ru.tinkoff.lab.domain.model.Film
 
 interface FavouriteRepository {
     fun getFavouriteFilms(): Flow<List<Film>>
-    fun getFavouriteFilm(filmId: Int): Film
+    suspend fun getFavouriteFilm(filmId: Int): Film
     suspend fun addToFavourite(film: Film)
     suspend fun removeFromFavourite(filmId: Int)
-  //  fun getFavouriteIds(): Flow<List<Int>>
+    fun getFavouritesId():Flow<List<Int>>
     suspend fun search(query: String): Flow<List<Film>>
 
 

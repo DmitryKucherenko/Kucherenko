@@ -2,11 +2,8 @@ package ru.tinkoff.lab.presentation.favouriteFilms.filmList
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -19,10 +16,8 @@ import kotlinx.coroutines.launch
 import ru.tinkoff.lab.App
 import ru.tinkoff.lab.R
 import ru.tinkoff.lab.databinding.FavouriteListBinding
-import ru.tinkoff.lab.domain.state.FilmListState
 import ru.tinkoff.lab.presentation.ViewModelFactory
 import ru.tinkoff.lab.presentation.favouriteFilms.filmList.adapter.FavouriteFilmAdapter
-import ru.tinkoff.lab.presentation.films.filmList.adapter.PreviewFilmAdapter
 import javax.inject.Inject
 
 class FavouriteListFragment : Fragment() {

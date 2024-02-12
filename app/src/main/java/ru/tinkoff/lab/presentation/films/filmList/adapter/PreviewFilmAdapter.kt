@@ -3,10 +3,12 @@ package ru.tinkoff.lab.presentation.films.filmList.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
+import ru.tinkoff.lab.data.local.db.FilmDao
 import ru.tinkoff.lab.databinding.FilmItemBinding
 import ru.tinkoff.lab.domain.model.Film
 
 class PreviewFilmAdapter(
+    private val isFavourite: (Film) -> Boolean,
     private val itemClickListener: (Film) -> Unit,
     private val itemLongClickListener: (Film) -> Unit
 ) :
@@ -19,6 +21,7 @@ class PreviewFilmAdapter(
 
     override fun onBindViewHolder(holder: PFilmHolder, position: Int) {
         val previewFilm = currentList[position]
-        holder.bind(previewFilm)
+        val isFavourite = isFavourite(previewFilm)
+        holder.bind(previewFilm, isFavourite)
     }
 }

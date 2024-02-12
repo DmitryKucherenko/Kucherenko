@@ -15,11 +15,14 @@ interface FilmDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFilm(film: FilmDb)
 
-    @Query ("DELETE FROM favouritefilms WHERE filmId = :filmId")
+    @Query("DELETE FROM favouritefilms WHERE filmId = :filmId")
     suspend fun deleteFilm(filmId: Int)
 
     @Query("SELECT * FROM favouritefilms WHERE filmId = :filmId")
-    fun getFilm(filmId: Int): FilmDb
+    suspend fun getFilm(filmId: Int): FilmDb
+
+    @Query("SELECT filmId FROM favouritefilms")
+    fun getFavouritesId(): Flow<List<Int>>
 
     @Query("SELECT * FROM favouritefilms WHERE nameRu LIKE :searchQuery")
     fun search(searchQuery: String): Flow<List<FilmDb>>

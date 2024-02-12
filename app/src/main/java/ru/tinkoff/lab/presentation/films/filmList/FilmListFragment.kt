@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.launch
 import ru.tinkoff.lab.App
 import ru.tinkoff.lab.R
+import ru.tinkoff.lab.data.local.db.FilmDao
 import ru.tinkoff.lab.databinding.FilmsListBinding
 import ru.tinkoff.lab.domain.state.FilmListState
 import ru.tinkoff.lab.presentation.ViewModelFactory
@@ -33,6 +34,7 @@ class FilmListFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+
 
     private val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[FilmListViewModel::class.java]
@@ -61,8 +63,10 @@ class FilmListFragment : Fragment() {
         val filmsRecyclerView = binding.previewFilmRecyclerView
         filmsRecyclerView.layoutManager = LinearLayoutManager(context)
 
+
         val adapter =
             PreviewFilmAdapter(
+                { previewFilm -> viewModel.isFavourite(previewFilm.filmId) },
                 { previewFilm ->
                     findNavController().navigate(
                         FilmListFragmentDirections.actionFilmListToDetailsFilmFragment(
@@ -70,7 +74,13 @@ class FilmListFragment : Fragment() {
                         )
                     )
                 },
-                { previewFilm -> viewModel.addFavourite(previewFilm) })
+                { previewFilm ->
+                    val filmId = previewFilm.filmId
+                    with(viewModel) {
+                        if (isFavourite(filmId)) deleteFavourite(filmId)
+                        else addFavourite(previewFilm)
+                    }
+                })
 
         filmsRecyclerView.adapter = adapter
         binding.refreshButton.setOnClickListener {
