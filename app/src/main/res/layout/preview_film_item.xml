@@ -72,6 +72,16 @@
             tools:text = "Фантастика (2016)"
             />
 
+        <ProgressBar
+            android:id="@+id/previewProgressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/previewIcon"
+            app:layout_constraintEnd_toEndOf="@+id/previewIcon"
+            app:layout_constraintStart_toStartOf="@+id/previewIcon"
+            app:layout_constraintTop_toTopOf="@+id/previewIcon" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

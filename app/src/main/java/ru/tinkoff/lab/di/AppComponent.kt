@@ -6,7 +6,6 @@ import dagger.BindsInstance
 import dagger.Component
 import ru.tinkoff.lab.presentation.filmList.previewFilmList.FilmListFragment
 import ru.tinkoff.lab.presentation.MainActivity
-import ru.tinkoff.lab.presentation.favouriteFilmList.FavouriteFilmListFragment
 import ru.tinkoff.lab.presentation.filmList.detailsFilm.DetailsFilmFragment
 import javax.inject.Singleton
 
@@ -30,7 +29,6 @@ interface AppComponent {
 
     fun inject(mainActivity: MainActivity)
     fun inject(filmListFragment: FilmListFragment)
-    fun inject(favouriteFilmListFragment: FavouriteFilmListFragment)
-     fun inject(detailsFilmFragment: DetailsFilmFragment)
+    fun inject(detailsFilmFragment: DetailsFilmFragment)
 
 }
