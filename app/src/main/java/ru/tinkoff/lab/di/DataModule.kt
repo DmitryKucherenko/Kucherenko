@@ -1,7 +1,13 @@
 package ru.tinkoff.lab.di
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import dagger.Module
 import dagger.Provides
+import okhttp3.Cache
+import okhttp3.CacheControl
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -12,10 +18,11 @@ import javax.inject.Singleton
 @Module
 class DataModule {
     private val BASE_URL = "https://kinopoiskapiunofficial.tech"
+    private var cacheSize = (10 * 1024 * 1024).toLong() // 10 MB
 
     @Singleton
     @Provides
-    fun provideRetrofit(okhttp: OkHttpClient): Retrofit {
+    fun provideRetrofit(okhttp: OkHttpClient, context: Context): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create())
             .baseUrl(BASE_URL)
@@ -29,7 +36,36 @@ class DataModule {
         return retrofit.create(ApiService::class.java)
     }
 
+    private fun isInternetAvailable(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val nw = connectivityManager.activeNetwork ?: return false
+            val actNw = connectivityManager.getNetworkCapabilities(nw) ?: return false
+            return when {
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                //for other device how are able to connect with Ethernet
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                //for check internet over Bluetooth
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) -> true
+                else -> false
+            }
+        } else {
+            return connectivityManager.activeNetworkInfo?.isConnected ?: false
+        }
+    }
+
     @Singleton
     @Provides
-    fun provideOkHttpClient() = OkHttpClient.Builder().build()
+    fun provideOkHttpClient(context: Context): OkHttpClient = OkHttpClient.Builder()
+        .cache(Cache(context.cacheDir, cacheSize))
+        .addInterceptor { chain ->
+            val builder = chain.request().newBuilder()
+            if (!isInternetAvailable(context)) {
+                builder.cacheControl(CacheControl.FORCE_CACHE);
+            }
+            chain.proceed(builder.build());
+        }
+        .build()
 }
