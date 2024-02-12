@@ -11,32 +11,32 @@ class FilmsMapper {
     companion object {
         private fun filmDtoToFilm(filmDto: FilmDto) = Film(
             filmId = filmDto.filmId,
-            nameRu = filmDto.nameRu,
-            year = filmDto.year,
-            countries = filmDto.countries.map { country ->
+            nameRu = filmDto.nameRu ?:"",
+            year = filmDto.year ?:"",
+            countries = filmDto.countries?.map { country ->
                 country.country
-            },
-            genres = filmDto.genres.map { genre ->
+            } ?: emptyList(),
+            genres = filmDto.genres?.map { genre ->
                 genre.genre
-            },
-            posterUrl = filmDto.posterUrl,
-            posterUrlPreview = filmDto.posterUrlPreview,
+            }?: emptyList(),
+            posterUrl = filmDto.posterUrl ?: "",
+            posterUrlPreview = filmDto.posterUrlPreview ?: ""
         )
 
 
         fun filmDetailsDtoToFilmDetails(filmDetailsDto: FilmDetailsDto) = FilmDetails(
             kinopoiskId = filmDetailsDto.kinopoiskId,
-            nameRu = filmDetailsDto.nameRu,
-            posterUrl = filmDetailsDto.posterUrl,
-            posterUrlPreview = filmDetailsDto.posterUrlPreview,
+            nameRu = filmDetailsDto.nameRu ?:"",
+            posterUrl = filmDetailsDto.posterUrl ?:"",
+            posterUrlPreview = filmDetailsDto.posterUrlPreview ?:"",
             description = filmDetailsDto.description ?: "",
             shortDescription = filmDetailsDto.shortDescription ?: "",
-            countries = filmDetailsDto.countries.map { country ->
+            countries = filmDetailsDto.countries?.map { country ->
                 country.country
-            },
-            genres = filmDetailsDto.genres.map { genre ->
+            } ?: emptyList(),
+            genres = filmDetailsDto.genres?.map { genre ->
                 genre.genre
-            }
+            } ?: emptyList()
         )
 
         fun filmListDtoToFilmList(filmsListApi: List<FilmDto>) =
