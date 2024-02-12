@@ -18,6 +18,7 @@ import com.example.vkclientnews.presentation.ViewModelFactory
 import kotlinx.coroutines.launch
 import ru.tinkoff.lab.App
 import ru.tinkoff.lab.databinding.PreviewListFilmsBinding
+import ru.tinkoff.lab.domain.model.FilmListState
 import ru.tinkoff.lab.presentation.filmList.previewFilmList.adapter.PreviewFilmAdapter
 import javax.inject.Inject
 
@@ -72,19 +73,15 @@ class FilmListFragment : Fragment() {
                 viewModel.loadPreviewFilmsList
                     .collect { filmListState ->
                         when (filmListState) {
-                            is FilmListState.Loading, FilmListState.Initial -> {
+                            is FilmListState.Loading -> {
                                 binding.emptyView.visibility = GONE
                                 binding.progressBarLoading.visibility = VISIBLE
                             }
-
-                            is FilmListState.Films -> {
+                            is FilmListState.Success -> {
                                 binding.emptyView.visibility = GONE
                                 binding.progressBarLoading.visibility = GONE
                                 adapter.submitList(filmListState.filmsList)
                             }
-
-
-
                             is FilmListState.Error -> {
                                 binding.progressBarLoading.visibility = GONE
                                 binding.emptyView.visibility = VISIBLE

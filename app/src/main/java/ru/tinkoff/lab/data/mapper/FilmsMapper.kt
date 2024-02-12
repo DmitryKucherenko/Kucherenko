@@ -7,10 +7,9 @@ import ru.tinkoff.lab.domain.model.DetailsFilm
 import ru.tinkoff.lab.domain.model.Genre
 import ru.tinkoff.lab.domain.model.PreviewFilm
 
-class FilmApiToDbMapper {
-
+class FilmsMapper {
     companion object {
-        fun previewFilmApiToDb(previewFilmApi: PreviewFilmApi) = PreviewFilm(
+        private fun previewFilmApiToFilm(previewFilmApi: PreviewFilmApi) = PreviewFilm(
             filmId = previewFilmApi.filmId,
             nameRu = previewFilmApi.nameRu,
             year = previewFilmApi.year,
@@ -25,7 +24,7 @@ class FilmApiToDbMapper {
         )
 
 
-        fun detailsFilmApiToDb(detailsFilmApi: DetailsFilmApi) = DetailsFilm(
+        fun detailsFilmApiToFilm(detailsFilmApi: DetailsFilmApi) = DetailsFilm(
             kinopoiskId = detailsFilmApi.kinopoiskId,
             nameRu = detailsFilmApi.nameRu,
             posterUrl = detailsFilmApi.posterUrl,
@@ -40,9 +39,9 @@ class FilmApiToDbMapper {
             }
         )
 
-        fun filmListApiToDb(filmsListApi: List<PreviewFilmApi>) =
+        fun filmListApiToFilmList(filmsListApi: List<PreviewFilmApi>) =
             filmsListApi.map { previewFilmApi ->
-                previewFilmApiToDb(previewFilmApi)
+                previewFilmApiToFilm(previewFilmApi)
             }
     }
 }

@@ -24,6 +24,7 @@ import com.example.vkclientnews.presentation.ViewModelFactory
 import kotlinx.coroutines.launch
 import ru.tinkoff.lab.App
 import ru.tinkoff.lab.databinding.DetailsFilmItemBinding
+import ru.tinkoff.lab.domain.model.DetailsFilmState
 import javax.inject.Inject
 
 class DetailsFilmFragment : Fragment() {
@@ -68,10 +69,10 @@ class DetailsFilmFragment : Fragment() {
                 viewModel.loadDetailsFilm(args.id)
                     .collect { stateDetailsFilm ->
                         when (stateDetailsFilm) {
-                            is DetailsFilmState.Loading, DetailsFilmState.Initial ->
+                            is DetailsFilmState.Loading ->
                                 binding.progressBar.visibility = VISIBLE
 
-                            is DetailsFilmState.Films -> {
+                            is DetailsFilmState.Success -> {
                                 val detailsFilm = stateDetailsFilm.detailsFilm
 
                                 with(binding) {

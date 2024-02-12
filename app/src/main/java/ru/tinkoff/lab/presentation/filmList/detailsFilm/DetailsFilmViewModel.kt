@@ -1,18 +1,18 @@
 package ru.tinkoff.lab.presentation.filmList.detailsFilm
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.retry
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import ru.tinkoff.lab.domain.model.DetailsFilmState
 import ru.tinkoff.lab.domain.usecase.DetailsFilmUseCase
 import ru.tinkoff.lab.extenstions.mergeWith
 
@@ -22,22 +22,18 @@ class DetailsFilmViewModel(
 
     private var loadedID: Int = -1
 
-    fun loadDetailsFilm(id: Int): StateFlow<DetailsFilmState> =
+    fun loadDetailsFilm(id: Int) =
         flow {
             loadedID = id
-            emit(DetailsFilmState.Films(detailsFilm = detailsFilmUseCase(id)) as DetailsFilmState)
+            detailsFilmUseCase(id).collect {
+                emit(it)
+            }
         }
-            .onStart {
-                emit(DetailsFilmState.Loading)
-            }
-            .catch {
-                emit(DetailsFilmState.Error(error = it))
-            }
             .mergeWith(refreshDataFlow)
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.Lazily,
-                initialValue = DetailsFilmState.Initial
+                initialValue = DetailsFilmState.Loading
             )
 
 
@@ -45,13 +41,11 @@ class DetailsFilmViewModel(
 
     private val refreshDataFlow = flow {
         refreshDataEvent.collect {
-            emit(
-                DetailsFilmState.Films(
-                    detailsFilm = detailsFilmUseCase(loadedID)
-                )
-            )
+            detailsFilmUseCase(loadedID).collect {
+                emit(it)
+            }
         }
-    }.retry()
+    }
 
     fun refreshDetailsFilm() {
         viewModelScope.launch {

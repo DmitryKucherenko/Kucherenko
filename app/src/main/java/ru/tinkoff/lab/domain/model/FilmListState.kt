@@ -1,15 +1,13 @@
-package ru.tinkoff.lab.presentation.filmList.previewFilmList
-
-import ru.tinkoff.lab.domain.model.PreviewFilm
+package ru.tinkoff.lab.domain.model
 
 sealed class FilmListState {
-    object Initial : FilmListState()
+
     object Loading : FilmListState()
     data class Error(
         val error: Throwable
     ) : FilmListState()
 
-    data class Films(
+    data class Success(
         val filmsList: List<PreviewFilm>
     ) : FilmListState()
 }

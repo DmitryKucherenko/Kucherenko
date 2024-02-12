@@ -1,10 +1,10 @@
 package ru.tinkoff.lab.domain.repository
 
-import ru.tinkoff.lab.data.network.model.DetailsFilmApi
-import ru.tinkoff.lab.domain.model.DetailsFilm
-import ru.tinkoff.lab.domain.model.PreviewFilm
+import kotlinx.coroutines.flow.Flow
+import ru.tinkoff.lab.domain.model.DetailsFilmState
+import ru.tinkoff.lab.domain.model.FilmListState
 
 interface FilmsListRepository {
-    suspend fun getFilmsList():List<PreviewFilm>
-    suspend fun getDetailsFilm(id:Int):DetailsFilm
+    fun getFilmsList(): Flow<FilmListState>
+    fun getDetailsFilm(id:Int): Flow<DetailsFilmState>
 }
